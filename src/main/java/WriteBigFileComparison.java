@@ -21,7 +21,7 @@ public class WriteBigFileComparison {
 
 
     public static void writeWithFileChannel() throws IOException {
-        File file = new File("e:/test/fc.dat");
+        File file = new File("/tmp/fc.dat");
         if (file.exists()) {
             file.delete();
         }
@@ -75,7 +75,7 @@ public class WriteBigFileComparison {
      * @throws IOException
      */
     public static void writeWithMappedByteBuffer() throws IOException {
-        File file = new File("e:/test/mb.dat");
+        File file = new File("/tmp/mb.dat");
         if (file.exists()) {
             file.delete();
         }
@@ -114,7 +114,7 @@ public class WriteBigFileComparison {
     }
 
     public static void writeWithTransferTo() throws IOException {
-        File file = new File("e:/test/transfer.dat");
+        File file = new File("/tmp/transfer.dat");
         if (file.exists()) {
             file.delete();
         }
@@ -211,7 +211,7 @@ public class WriteBigFileComparison {
 //		sw.stopAndPrint();
 //
 //		sw.startWithTaskName("write with MappedByteBuffer");
-//		writeWithMappedByteBuffer();
+		writeWithMappedByteBuffer();
 //		sw.stopAndPrint();
         System.out.println(1);
     }
