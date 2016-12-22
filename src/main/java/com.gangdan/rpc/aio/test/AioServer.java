@@ -11,16 +11,13 @@ public class AioServer {
 
     private int port = 8081;
 
-    public static void main(String[] args) throws Exception{
-
+    public static void main(String[] args) throws Exception {
+        AioServer aioServer = new AioServer();
+        aioServer.init();
     }
-    public void init()throws IOException {
-        AsynchronousServerSocketChannel serverSocketChannel = AsynchronousServerSocketChannel.open();
-        serverSocketChannel.bind(new InetSocketAddress(8081));
-        serverSocketChannel.accept(this, new AcceptHandler());
 
-
-
+    public void init() throws IOException {
+        new Thread(new Server(port)).start();
     }
 
 }
