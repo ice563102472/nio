@@ -1,4 +1,4 @@
-package com.gangdan.rpc.aio.test;
+package com.gangdan.rpc.aio;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
