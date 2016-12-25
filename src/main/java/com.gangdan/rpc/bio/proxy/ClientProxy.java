@@ -3,10 +3,9 @@ package com.gangdan.rpc.bio.proxy;
 import com.gangdan.rpc.bio.IPerson;
 import com.gangdan.rpc.bio.protocol.Protocol;
 import com.gangdan.rpc.bio.protocol.ProtocolConstant;
+import com.gangdan.rpc.connector.BIOConnector;
 
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.BufferedOutputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
 import java.net.Socket;
@@ -53,17 +52,15 @@ public class ClientProxy extends BaseProxy {
             params.add(Arrays.asList(args));
         }
         protocol.setArgs(params);
-        Socket             socket             = new Socket("127.0.0.1", 8301);
-        OutputStream       outputStream       = socket.getOutputStream();
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
-        objectOutputStream.writeObject(protocol);
+        Socket       socket       = new Socket("127.0.0.1", 8301);
+        OutputStream outputStream = socket.getOutputStream();
+        setConnector(new BIOConnector());
+        startServeice();
+        byte[]               bytes                = getConnector().write(protocol);
+        BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outputStream);
+        bufferedOutputStream.write(bytes);
 
-        InputStream       inputStream       = socket.getInputStream();
-        ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
-        Object            object            = objectInputStream.readObject();
-        System.out.println(object);
-        socket.close();
 
-        return object;
+        return null;
     }
 }

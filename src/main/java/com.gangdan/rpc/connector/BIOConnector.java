@@ -1,21 +1,15 @@
 package com.gangdan.rpc.connector;
 
-import com.gangdan.rpc.bio.Person;
 import com.gangdan.rpc.bio.Server;
-import com.gangdan.rpc.bio.protocol.Protocol;
 import com.gangdan.rpc.bio.serialize.JdkSerialize;
 import com.gangdan.rpc.bio.serialize.Serialize;
-import com.gangdan.rpc.util.NioUtils;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.lang.reflect.Method;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Objects;
@@ -32,8 +26,7 @@ public class BIOConnector extends AbstractRPCConnector implements IRPCConnector 
     private              Logger logger       = LoggerFactory.getLogger(Server.class);
     private ExecutorService service;
     private ServerSocket    serverSocket;
-    //默认采用jdk的序列化方式,正式环境需要通过配置文件来实现具体的序列化方法
-    private Serialize serialize = new JdkSerialize();
+    private Serialize serialize = new JdkSerialize();//默认采用jdk的序列化方式,正式环境需要通过配置文件来实现具体的序列化方法
 
     @Override
     public void startServeice() {
@@ -86,8 +79,8 @@ public class BIOConnector extends AbstractRPCConnector implements IRPCConnector 
     }
 
     @Override
-    public void write(Object object) {
-        serialize.serialize(object);
+    public byte[] write(Object object) {
+        return serialize.serialize(object);
     }
 
     @Override
@@ -95,6 +88,9 @@ public class BIOConnector extends AbstractRPCConnector implements IRPCConnector 
         return serialize.deserialize(bytes);
     }
 
+    /**
+     * 该线程不应该放在这里
+     */
     @RequiredArgsConstructor
     private class SocketThread implements Runnable {
         @NonNull
@@ -103,17 +99,28 @@ public class BIOConnector extends AbstractRPCConnector implements IRPCConnector 
 
         public void run() {
             if (!Objects.isNull(socket)) {
-//                ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
-//                Protocol          protocol          = (Protocol) objectInputStream.readObject();
-//
-//                //这里应该是具体的connector来做读写操作
-//                //如果没有就返回错误信息
-//                Class              clazz              = (Class) cache.get(protocol.getClassName());
-//                Method             m1                 = clazz.getDeclaredMethod(protocol.getMethod());
-//                Object             result             = m1.invoke(new Person());
-//                ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-//                objectOutputStream.writeObject(result);
-//                socket.close();
+                try {
+                    BufferedInputStream bufferedInputStream = new BufferedInputStream(socket.getInputStream());
+                    byte[]              bytes               = new byte[1024];
+
+                    int    hasNext = bufferedInputStream.read(bytes);
+                    Object object  = read(bytes);
+                    System.out.println(object);
+
+                    //                Protocol          protocol          = (Protocol) objectInputStream.readObject();
+                    //
+                    //                //这里应该是具体的connector来做读写操作
+                    //                //如果没有就返回错误信息
+                    //                Class              clazz              = (Class) cache.get(protocol.getClassName());
+                    //                Method             m1                 = clazz.getDeclaredMethod(protocol.getMethod());
+                    //                Object             result             = m1.invoke(new Person());
+                    //                ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+                    //                objectOutputStream.writeObject(result);
+                    //                socket.close();
+                } catch (IOException ex) {
+
+                }
+
 
             } else {
             }

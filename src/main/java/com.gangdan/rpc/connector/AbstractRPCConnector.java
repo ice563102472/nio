@@ -1,7 +1,10 @@
 package com.gangdan.rpc.connector;
 
 import com.gangdan.rpc.cache.Cache;
-import lombok.*;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Created by yangzhuo on 16-12-25.
@@ -15,11 +18,11 @@ public class AbstractRPCConnector implements IRPCConnector {
     @Getter
     @Setter
     @NonNull
-    protected String  address = "127.0.0.1";
+    protected String                address = "127.0.0.1";
     //服务是否正常运行
     @Setter
-    protected boolean isStop  = false;
-    protected Cache<String, Object> cache = new Cache<>();
+    protected boolean               isStop  = false;
+    protected Cache<String, Object> cache   = new Cache<>();
 
 
     @Override
@@ -38,8 +41,8 @@ public class AbstractRPCConnector implements IRPCConnector {
     }
 
     @Override
-    public void write(Object object) {
-
+    public byte[] write(Object object) {
+        return new byte[0];
     }
 
     @Override

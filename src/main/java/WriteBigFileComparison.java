@@ -179,7 +179,7 @@ public class WriteBigFileComparison {
                 public Object run() {
                     try {
                         Method getCleanerMethod = mappedByteBuffer.getClass()
-                                .getMethod("cleaner", new Class[0]);
+                                                                  .getMethod("cleaner", new Class[0]);
                         getCleanerMethod.setAccessible(true);
                         sun.misc.Cleaner cleaner =
                                 (sun.misc.Cleaner) getCleanerMethod
@@ -200,19 +200,19 @@ public class WriteBigFileComparison {
     }
 
     public static void main(String[] args) throws IOException {
-//		StopWatch sw = new StopWatch();
-//
-//		sw.startWithTaskName("write with file channel's write(ByteBuffer)");
-//		writeWithFileChannel();
-//		sw.stopAndPrint();
-//
-//		sw.startWithTaskName("write with file channel's transferTo");
-//		writeWithTransferTo();
-//		sw.stopAndPrint();
-//
-//		sw.startWithTaskName("write with MappedByteBuffer");
-		writeWithMappedByteBuffer();
-//		sw.stopAndPrint();
+        //		StopWatch sw = new StopWatch();
+        //
+        //		sw.startWithTaskName("write with file channel's write(ByteBuffer)");
+        //		writeWithFileChannel();
+        //		sw.stopAndPrint();
+        //
+        //		sw.startWithTaskName("write with file channel's transferTo");
+        //		writeWithTransferTo();
+        //		sw.stopAndPrint();
+        //
+        //		sw.startWithTaskName("write with MappedByteBuffer");
+        writeWithMappedByteBuffer();
+        //		sw.stopAndPrint();
         System.out.println(1);
     }
 

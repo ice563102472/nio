@@ -1,6 +1,6 @@
 package com.gangdan.rpc.bio.proxy;
 
-import com.gangdan.rpc.connector.IRPCConnector;
+import com.gangdan.rpc.connector.AbstractRPCConnector;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -20,7 +20,25 @@ public class BaseProxy implements InvocationHandler {
     @Getter
     @Setter
     @NonNull
-    private IRPCConnector connector;
+    private AbstractRPCConnector connector;
+    @Getter
+    private int                  port;
+    @Getter
+    private String               host;
+
+    public void setPort(int port) {
+        if (connector == null) {
+            throw new NullPointerException("connector is null");
+        }
+        connector.setPort(port);
+    }
+
+    public void setHost(String host) {
+        if (connector == null) {
+            throw new NullPointerException("connector is null");
+        }
+        connector.setAddress(host);
+    }
 
     public <T> T bind(Class<T> object) {
         T result = (T) Proxy.newProxyInstance(this.getClass().getClassLoader(), new Class[]{object}, this);
@@ -32,12 +50,13 @@ public class BaseProxy implements InvocationHandler {
         return result != null ? result : null;
     }
 
-    public void stop() {
+    public void stopService() {
         connector.stopService();
     }
 
-    public void start() {
+    public void startServeice() {
         connector.startServeice();
     }
+
 
 }

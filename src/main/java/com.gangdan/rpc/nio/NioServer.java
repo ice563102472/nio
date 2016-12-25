@@ -15,10 +15,10 @@ import java.util.Set;
  */
 public class NioServer {
 
-    private static final int PORT = 8391;
-    private volatile boolean stop = false;
+    private static final int     PORT = 8391;
+    private volatile     boolean stop = false;
     private ServerSocketChannel serverSocketChannel;
-    private Selector selector;
+    private Selector            selector;
     private Logger logger = LoggerFactory.getLogger(NioServer.class);
 
     public static void main(String[] args) throws IOException {
@@ -46,8 +46,8 @@ public class NioServer {
                     if (selector.select(10) <= 0) {
                         continue;
                     }
-                    Set<SelectionKey> selectionKeys = selector.selectedKeys();
-                    Iterator<SelectionKey> iterator = selectionKeys.iterator();
+                    Set<SelectionKey>      selectionKeys = selector.selectedKeys();
+                    Iterator<SelectionKey> iterator      = selectionKeys.iterator();
                     while (iterator.hasNext()) {
                         SelectionKey keyElement = iterator.next();
                         iterator.remove();
@@ -83,7 +83,7 @@ public class NioServer {
 
                 if (selectionKey.isReadable()) {
                     SocketChannel socketChannel = (SocketChannel) selectionKey.channel();
-                    ByteBuffer byteBuffer = ByteBuffer.allocate(2048);
+                    ByteBuffer    byteBuffer    = ByteBuffer.allocate(2048);
                     try {
                         readFromBytes(socketChannel, byteBuffer);
                     } catch (IOException ex) {
@@ -96,7 +96,7 @@ public class NioServer {
 
         private String readFromBytes(ReadableByteChannel channel, ByteBuffer byteBuffer) throws IOException {
             StringBuilder readString = new StringBuilder("");
-            int hasRead;
+            int           hasRead;
 
             while ((hasRead = channel.read(byteBuffer)) > 0) {
                 byteBuffer.flip();
@@ -113,7 +113,7 @@ public class NioServer {
 
         private void doWrite(SocketChannel socketChannel, String response) {
 
-            byte[] bytes = response.getBytes();
+            byte[]     bytes      = response.getBytes();
             ByteBuffer byteBuffer = ByteBuffer.allocate(bytes.length);
             byteBuffer.put(bytes);
             byteBuffer.flip();

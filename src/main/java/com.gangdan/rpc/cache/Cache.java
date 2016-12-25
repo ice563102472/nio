@@ -16,6 +16,7 @@ public class Cache<KEY, VALUE> {
 
     /**
      * 写入操作
+     *
      * @param key
      * @param value
      */
@@ -25,6 +26,7 @@ public class Cache<KEY, VALUE> {
 
     /**
      * 查询操作
+     *
      * @param key
      * @return
      */
@@ -34,6 +36,7 @@ public class Cache<KEY, VALUE> {
 
     /**
      * 是否包含该key
+     *
      * @param key
      * @return
      */

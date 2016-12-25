@@ -6,6 +6,6 @@ package com.gangdan.rpc.bio;
 public class Person implements IPerson {
     @Override
     public void test() {
-//        return 2;
+        //        return 2;
     }
 }

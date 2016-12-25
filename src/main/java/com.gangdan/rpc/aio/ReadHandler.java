@@ -35,8 +35,8 @@ public class ReadHandler implements CompletionHandler<Integer, ByteBuffer> {
         attachment.get(body);
         String input = new String(body);
         System.out.println(input);
-        String str = "hello world";
-        ByteBuffer bb = ByteBuffer.allocate(str.getBytes().length);
+        String     str = "hello world";
+        ByteBuffer bb  = ByteBuffer.allocate(str.getBytes().length);
         bb.put(str.getBytes());
         bb.flip();
         socketChannel.write(bb);

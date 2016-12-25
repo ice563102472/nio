@@ -1,19 +1,17 @@
 package com.gangdan.rpc.util;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.channels.SelectionKey;
-import java.util.zip.GZIPInputStream;
-import java.util.zip.GZIPOutputStream;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
+
 public class NioUtils {
 
-    private static      Logger logger                = LoggerFactory.getLogger(NioUtils.class);
+    private static Logger logger = LoggerFactory.getLogger(NioUtils.class);
 
     public static byte[] zip(byte[] bytes) {
         if (bytes != null && bytes.length > 0) {
