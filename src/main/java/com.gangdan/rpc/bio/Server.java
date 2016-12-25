@@ -47,8 +47,6 @@ public class Server {
     this.init();
     ServerSocket serverSocket = this.serverSocket;
     Socket       socket       = null;
-    //    Runtime.getRuntime().addShutdownHook();
-
     while (true) {
       if (!this.service.isShutdown()) {
         try {
@@ -57,7 +55,6 @@ public class Server {
 
         }
         new Thread(new SocketThread(socket)).start();
-        //        this.service.submit(new Thread(new SocketThread(socket)));
       } else {
         break;
       }

@@ -1,14 +1,45 @@
 package com.gangdan.rpc.bio.protocol;
 
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
+import lombok.ToString;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by yangzhuo on 16-12-16.
  */
-public abstract class Protocol {
+@ToString
+public class Protocol implements Serializable {
 
-  protected String version;
-  protected String protocol;
-  protected String head;
-  protected String content;
-  protected long   contentLength;
-  protected int    messageId;
+    private static final long serialVersionUID = 997446348954685410L;
+
+    @Getter
+    @Setter
+    private String version;
+    @Getter
+    @Setter
+    private String protocol;
+    @Getter
+    @Setter
+    private List   head;
+    @Getter
+    @Setter
+    private List   args;
+    @Getter
+    @Setter
+    private String className;
+    //如果是http服务 method就是接口路径
+    @Getter
+    @Setter
+    private String method;
+    @Getter
+    @Setter
+    private long   contentLength;
+    @Getter
+    @Setter
+    private int    messageId;
 }
